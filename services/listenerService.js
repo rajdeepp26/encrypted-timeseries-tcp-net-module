@@ -1,47 +1,39 @@
 const crypto = require("crypto");
-const listenerDB = require("../db-access/listenerDB");
+// const listenerDB = require("../db-access/listenerDB");
 
-exports.getcompleteDecryptedData = async (
-  encryptedDataArray,
-  completeDecryptedData
-) => {
-  try {
-    for (let i = 0; i < encryptedDataArray.length; i++) {
-      let decryptedData = "";
-      if (encryptedDataArray[i].length > 0) {
-        decryptedData += await decryptObject(encryptedDataArray[i]);
-        let validDecryptedData = await validateObject(decryptedData);
-        if (validDecryptedData) {
-          completeDecryptedData += validDecryptedData;
-        }
-      }
-    }
-    const dbResponse = await listenerDB.addValidObject(completeDecryptedData);
-    if (Object.keys(dbResponse).length <= 2) {
-      throw Error("Object was not saved in Db");
-    }
-    let validData = dbResponse.valid_object;
-    return validData;
-  } catch (err) {
-    throw Error("Error while getting all decrypted Data");
-  }
-};
+// exports.getcompleteDecryptedData = async (
+//   encryptedDataArray,
+//   completeDecryptedData
+// ) => {
+//   try {
+//     const dbResponse = await listenerDB.addValidObject(completeDecryptedData);
+//     if (Object.keys(dbResponse).length <= 2) {
+//       throw Error("Object was not saved in Db");
+//     }
+//     let validData = dbResponse.valid_object;
+//     return validData;
+//   } catch (err) {
+//     throw Error("Error while getting all decrypted Data");
+//   }
+// };
 
-const decryptObject = async (encryptedData) => {
+exports.getDecryptedObject = async (encryptedData) => {
   try {
     // const iv = crypto.randomBytes(16).toString("hex").slice(0, 16);
-    const iv = process.env.IV;
-    const key = process.env.SECRET_KEY;
-    const decrypter = crypto.createDecipheriv("aes-256-ctr", key, iv);
+    let key = "12345678123456781234567812345678";
+    let iv = "39fd9f350fd145cc";
+    // const iv = process.env.IV;
+    // const key = process.env.SECRET_KEY;
 
-    let decryptedData = decrypter.update(encryptedData, "hex", "utf-8");
+    const decrypter = crypto.createDecipheriv("aes-256-ctr", key, iv);
+    let decryptedData = decrypter.update(encryptedData.toString(), "hex", "utf-8");
     return decryptedData;
   } catch (err) {
     throw Error("Error while adding decrypting object");
   }
 };
 
-const validateObject = async (decryptedData) => {
+exports.validateObject = async (decryptedData) => {
   try {
     let receivedObject = JSON.parse(decryptedData);
 
@@ -55,7 +47,7 @@ const validateObject = async (decryptedData) => {
     hash.update(JSON.stringify(testData));
     let testHashedValue = hash.digest("hex");
     if (testHashedValue == receivedObject.secret_key) {
-      return JSON.stringify(testData);
+      return testData;
     } else {
       return null;
     }

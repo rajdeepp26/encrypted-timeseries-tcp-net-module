@@ -1,9 +1,9 @@
-const { createReadStream, readFileSync } = require("fs");
+const net = require("net");
+const { readFileSync } = require("fs");
 
 const emitterService = require("./services/emitterService");
 const filename = "./data.json";
 
-const net = require("net");
 const port = 1234;
 const host = "localhost";
 const TIME_INTERVAL = 3000;
@@ -19,7 +19,6 @@ server.on("connection", (socket) => {
   console.log(`new client connected: ${clientAddress}`);
   sockets.push(socket);
 
-  let fileReader = createReadStream(filename);
   // let fileData = "";
   let fileObject = readFileSync(filename, "utf8");
 
@@ -37,7 +36,6 @@ server.on("connection", (socket) => {
     console.log(`Client ${clientAddress}: ${data}`);
 
   });
-
 
   // Add a 'close' event handler to this instance of socket
   socket.on("close", (data) => {
