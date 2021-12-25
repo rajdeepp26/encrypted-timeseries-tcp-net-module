@@ -1,10 +1,7 @@
 const crypto = require("crypto");
 // const listenerDB = require("../db-access/listenerDB");
 
-// exports.getcompleteDecryptedData = async (
-//   encryptedDataArray,
-//   completeDecryptedData
-// ) => {
+// exports.getcompleteDecryptedData = async (completeDecryptedData) => {
 //   try {
 //     const dbResponse = await listenerDB.addValidObject(completeDecryptedData);
 //     if (Object.keys(dbResponse).length <= 2) {
