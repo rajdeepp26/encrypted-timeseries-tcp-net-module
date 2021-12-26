@@ -1,18 +1,23 @@
 const mongoose = require("mongoose");
 
 const objectSchema = new mongoose.Schema({
-  timeseries: {
-    timeField: Date,
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
+    valid_object: {
+      name: String,
+      origin: String,
+      destination: String,
+    },
   },
-  time: {
-    type: Date,
-    default: Date.now,
-  },
-  valid_object: {
-    type: String,
-    required: [true, "Document must have a valid object"],
-  },
-});
+  {
+    timeseries: {
+      timeField: "timestamp",
+      granularity: "minutes",
+    },
+  }
+);
 
 const Valid = mongoose.model("Valid", objectSchema);
 
