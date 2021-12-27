@@ -20,7 +20,7 @@ client.on("data", async (data) => {
     let validObject = await listenerService.validateObject(decryptedData);
     if (Object.keys(validObject).length === 3) {
       // then send the obj to fronted
-      client.write(`received - ${JSON.stringify(validObject)} `);
+      client.write(`Valid Object - ${JSON.stringify(validObject)} `);
     }
   } catch (err) {
     throw Error("Error occurred while receiving data at client side")

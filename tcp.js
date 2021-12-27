@@ -19,7 +19,7 @@ server.on("connection", (socket) => {
   console.log(`new client connected: ${clientAddress}`);
   sockets.push(socket);
 
-  // let fileData = "";
+  // socket.write('HTTP/1.1 200 OK\n\nhallo world');
   let fileObject = readFileSync(filename, "utf8");
 
   const Emitter = setInterval(() => {
@@ -40,16 +40,6 @@ server.on("connection", (socket) => {
   // Add a 'close' event handler to this instance of socket
   socket.on("close", (data) => {
     clearInterval(Emitter);
-    let index = sockets.findIndex((o) => {
-      return (
-        o.remoteAddress === socket.remoteAddress &&
-        o.remotePort === socket.remotePort
-      );
-    });
-    if (index !== -1) sockets.splice(index, 1);
-    sockets.forEach((sock) => {
-      sock.write(`${clientAddress} disconnected\n`);
-    });
     console.log(`connection closed: ${clientAddress}`);
   });
 
