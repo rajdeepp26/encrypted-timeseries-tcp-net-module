@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const net = require("net");
 const { readFileSync } = require("fs");
 
@@ -5,7 +7,7 @@ const emitterService = require("./services/emitterService");
 const filename = "./data.json";
 let fileObject = readFileSync(filename, "utf8");
 
-const port = 1234;
+const port = process.env.PORT;
 const host = "localhost";
 const TIME_INTERVAL = 3000;
 

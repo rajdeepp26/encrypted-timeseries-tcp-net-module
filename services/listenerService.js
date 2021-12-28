@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const crypto = require("crypto");
 const listenerDB = require("../db-access/listenerDB");
 
@@ -17,10 +19,8 @@ exports.saveToDb = async (validObject) => {
 exports.getDecryptedObject = async (encryptedData) => {
   try {
     // const iv = crypto.randomBytes(16).toString("hex").slice(0, 16);
-    let key = "12345678123456781234567812345678";
-    let iv = "39fd9f350fd145cc";
-    // const iv = process.env.IV;
-    // const key = process.env.SECRET_KEY;
+    let key = process.env.SECRET_KEY;
+    let iv = process.env.IV;
 
     const decrypter = crypto.createDecipheriv("aes-256-ctr", key, iv);
     let decryptedData = decrypter.update(encryptedData.toString(), "hex", "utf-8");

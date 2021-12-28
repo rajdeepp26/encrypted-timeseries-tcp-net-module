@@ -1,6 +1,6 @@
-const { Transform } = require("stream");
+const dotenv = require("dotenv");
+dotenv.config();
 const crypto = require("crypto");
-const NUMBER_OF_OBJECTS = 10;
 
 exports.createObjectFromFile = (fileObject) => {
   try {
@@ -36,11 +36,9 @@ exports.addHashToObject = (transformedObject) => {
 exports.encryptObject = (transformedObjectWithHash) => {
   try {
     // const iv = crypto.randomBytes(16).toString("hex").slice(0, 16);
-    let key = "12345678123456781234567812345678";
-    let iv = "39fd9f350fd145cc";
-    // const iv = process.env.IV;
+    const iv = process.env.IV;
+    const key = process.env.SECRET_KEY;
     const message = JSON.stringify(transformedObjectWithHash);
-    // const key = process.env.SECRET_KEY;
 
     const encrypter = crypto.createCipheriv("aes-256-ctr", key, iv);
     let encryptedMessage = encrypter.update(message, "utf8", "hex");

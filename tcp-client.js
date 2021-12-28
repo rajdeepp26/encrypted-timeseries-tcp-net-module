@@ -1,13 +1,18 @@
+const dotenv = require("dotenv");
+dotenv.config();
 var net = require("net");
-const listenerService = require("./services/listenerService");
-
-const HOST = "localhost";
-const PORT = 1234;
-var client = new net.Socket();
 const mongoose = require("mongoose");
 
+const listenerService = require("./services/listenerService");
+const USER_NAME= process.env.USER_NAME;
+const USER_PASSWORD = process.env.USER_PASSWORD;
+const MONGO_DB = process.env.MONGO_DB;
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
+var client = new net.Socket();
+
 const DB =
-  "mongodb+srv://user1:AEDGtX4kPhpG7v5@encrypted-timeseries.nxkbi.mongodb.net/time-series?retryWrites=true&w=majority";
+  `mongodb+srv://${USER_NAME}:${USER_PASSWORD}@encrypted-timeseries.nxkbi.mongodb.net/${MONGO_DB}?retryWrites=true&w=majority`;
 
 mongoose
   .connect(DB, {
