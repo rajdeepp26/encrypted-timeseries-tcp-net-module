@@ -1,18 +1,18 @@
 const crypto = require("crypto");
-// const listenerDB = require("../db-access/listenerDB");
+const listenerDB = require("../db-access/listenerDB");
 
-// exports.getcompleteDecryptedData = async (completeDecryptedData) => {
-//   try {
-//     const dbResponse = await listenerDB.addValidObject(completeDecryptedData);
-//     if (Object.keys(dbResponse).length <= 2) {
-//       throw Error("Object was not saved in Db");
-//     }
-//     let validData = dbResponse.valid_object;
-//     return validData;
-//   } catch (err) {
-//     throw Error("Error while getting all decrypted Data");
-//   }
-// };
+exports.saveToDb = async (validObject) => {
+  try {
+    const dbResponse = await listenerDB.addValidObject(validObject);
+    if (Object.keys(dbResponse).length <= 2) {
+      throw Error("Object was not saved in Db");
+    }
+    let validData = dbResponse.valid_object;
+    return validData;
+  } catch (err) {
+    throw Error("Error while getting all decrypted Data");
+  }
+};
 
 exports.getDecryptedObject = async (encryptedData) => {
   try {

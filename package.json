@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "transferring encrypted message through socket",
   "main": "tcp-client.js",
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "^6.1.3"
+  },
   "devDependencies": {
     "nodemon": "^2.0.15"
   },
