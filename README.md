@@ -7,6 +7,4 @@ EMITTER_PORT, LISTENER_PORT, HOST, Mongo: USER_NAME, Mongo: USER_PASSWORD,MONGO_
 
 Run "node listener.js" in one terminal
 
-Open http://localhost:3000/ to get valid objects from listener service
-
 Run "node emitter.js"
